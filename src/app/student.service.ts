@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -8,21 +9,30 @@ export class StudentService {
 
   constructor(private http: HttpClient) { }
 
-  API = 'http://localhost:8080';
+  API = 'http://localhost:3000';
 
   public registerStudent(studentData: any) {
-    return this.http.post(this.API + '/registerStudent', studentData)
+    return this.http.post(this.API + '/posts', studentData)
+    .pipe(map((res:any)=>{
+      return res
+    }))
   }
   public getStudent() {
-    return this.http.get(this.API + '/getStudents')
+    return this.http.get(this.API + '/posts')
+    .pipe(map((res:any)=>{
+      return res
+    }))
   }
   public deleteStudent(id: any) {
-    return this.http.delete(this.API + '/deleteStudent?id=' + id);
+    return this.http.delete(this.API + '/posts?id=' + id)
+    .pipe(map((res:any)=>{
+      return res
+    }))
   }
   public updateStudent(student: any){
-    return this.http.put(this.API + '/updateStudent', student);
-  }
-  public updateStudents(student: any) {
-    return this.http.put(this.API + '/updateStudents', student);
+    return this.http.put(this.API +'/posts', student)
+    .pipe(map((res:any)=>{
+      return res
+    }))
   }
 }

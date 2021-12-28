@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { studentModle } from './student.model';
 import { StudentService } from './student.service';
 
 @Component({
@@ -10,6 +11,9 @@ import { StudentService } from './student.service';
 export class AppComponent {
   title = 'StudentDashboard';
   studentDetails!:any ;
+
+  studentModelObj : studentModle = new studentModle ();
+  
   studentToUpdate = {
     rollNumber:"",
     name:"",
@@ -17,9 +21,6 @@ export class AppComponent {
     percentage:""
   }
   
-  
-  
-
   constructor(private studentService: StudentService){
 
     this.getStudentDetails();
@@ -52,13 +53,13 @@ export class AppComponent {
     );
   }
 
-  deleteStudent(student: any) {
+  deleteStudent(student: any){
     this.studentService.deleteStudent(student.rollNumber).subscribe(
-      (resp) => {
+      (resp)=>{
         console.log(resp);
         this.getStudentDetails();
       },
-      (err) => {
+      (err)=>{
         console.log(err);
       }
     );
